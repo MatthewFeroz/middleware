@@ -2,7 +2,10 @@ langchain>=1.0
 langchain-core>=1.2.28
 langchain-openai>=1.1.14
 langgraph
+langchain-community
 deepagents
 langsmith>=0.7.31
 python-dotenv
 notebook
+wikipedia
+rich

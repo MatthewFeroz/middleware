@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+    "."
+  ],
+  "graphs": {
+    "refund_agent": "./refund_agent.py:agent",
+    "refund_agent_with_hitl": "./refund_agent_with_hitl.py:agent",
+    "gated_refund_agent": "./gated_refund_agent.py:agent",
+    "trip_planning_agent": "./trip_planning_agent.py:agent",
+    "research_agent": "./research_agent.py:agent"
+  },
+  "env": ".env"
+}
