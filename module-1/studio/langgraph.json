@@ -9,5 +9,5 @@
     "trip_planning_agent": "./trip_planning_agent.py:agent",
     "research_agent": "./research_agent.py:agent"
   },
-  "env": ".env"
+  "env": "../.env"
 }
