@@ -1,4 +1,4 @@
-![LangChain](assets/logo-light.svg)
+![LangChain](module-1/assets/logo-light.svg)
 
 # Introduction to Middleware
 
