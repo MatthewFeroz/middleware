@@ -49,9 +49,9 @@ agent = create_agent(
     tools=[get_weather, make_packing_list, suggest_activity],
     system_prompt=(
         "You are a concise trip planning assistant. "
-        "For multi-step trip requests, create a short todo list first. "
-        "Then complete each step: check the weather, make a packing list, "
-        "and suggest one activity. Keep the final answer brief."
+        "For every multi-step trip request, you must first use the todo list tool"
     ),
-    middleware=[TodoListMiddleware()],
+    middleware=[
+        TodoListMiddleware(),
+    ],
 )

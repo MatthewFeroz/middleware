@@ -10,6 +10,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import wrap_tool_call
 from langchain_core.messages import ToolMessage
 from langchain_core.tools import tool
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.types import interrupt
 
 
@@ -30,12 +31,16 @@ def issue_refund(order_id: str, amount: float, reason: str) -> str:
 
 
 @wrap_tool_call
-async def refund_threshold_gate(request, handler):
+def refund_threshold_gate(request, handler):
     """Pause for human approval only when the refund amount exceeds $100."""
     if request.tool_call["name"] == "issue_refund":
         amount = request.tool_call["args"].get("amount", 0)
 
+        print(f"\nMiddleware saw refund request for ${amount:.2f}")
+
         if amount > 100:
+            print("Middleware paused execution for approval.")
+
             decision = interrupt(
                 {
                     "action": "issue_refund",
@@ -45,12 +50,16 @@ async def refund_threshold_gate(request, handler):
             )
 
             if not decision.get("approved", False):
+                print("Middleware rejected the refund.")
+
                 return ToolMessage(
                     content="Refund rejected by reviewer.",
                     tool_call_id=request.tool_call["id"],
                 )
 
-    return await handler(request)
+            print("Middleware approved the refund.")
+
+    return handler(request)
 
 
 agent = create_agent(
@@ -60,5 +69,6 @@ agent = create_agent(
         "You are a customer refund support agent. "
         "Look up the order to get the total, then issue a refund for that amount."
     ),
+    checkpointer=MemorySaver(),
     middleware=[refund_threshold_gate],
 )

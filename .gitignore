@@ -171,6 +171,7 @@ cython_debug/
 .AppleDouble
 .LSOverride
 .codex/
+.langgraph_api/
 
 # Icon must end with two \r
 Icon

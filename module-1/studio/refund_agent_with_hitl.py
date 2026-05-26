@@ -8,6 +8,7 @@ rejected so learners can inspect how tool approval changes the trace.
 from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langchain_core.tools import tool
+from langgraph.checkpoint.memory import MemorySaver
 
 
 @tool
@@ -21,18 +22,16 @@ def lookup_order(order_id: str) -> str:
 
 
 @tool
-def issue_refund(order_id: str, amount: float = 45.0, reason: str = "Customer requested refund") -> str:
+def issue_refund(order_id: str, reason: str) -> str:
     """Issue a refund for a customer's order."""
-    return f"Refund of ${amount:.2f} processed for order {order_id}. Reason: {reason}"
+    return f"Refund processed for order {order_id}. Reason: {reason}"
 
 
 agent = create_agent(
     model="openai:gpt-4o-mini",
     tools=[lookup_order, issue_refund],
-    system_prompt=(
-        "You are a customer refund support agent. "
-        "Look up the order and issue a refund when a customer requests one."
-    ),
+    system_prompt="You are a customer refund support agent. Look up the order and issue a refund when a customer requests one.",
+    checkpointer=MemorySaver(),
     middleware=[
         HumanInTheLoopMiddleware(
             interrupt_on={

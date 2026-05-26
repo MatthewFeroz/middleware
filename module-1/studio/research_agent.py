@@ -9,6 +9,7 @@ from langchain.agents import create_agent
 from langchain.agents.middleware import SummarizationMiddleware
 from langchain_community.retrievers import WikipediaRetriever
 from langchain_core.tools import tool
+from langgraph.checkpoint.memory import InMemorySaver
 
 
 retriever = WikipediaRetriever(
@@ -44,12 +45,16 @@ agent = create_agent(
         "Use Wikipedia to gather facts across the conversation. "
         "When asked for a final answer, combine the important facts into a short, clear summary."
     ),
+    checkpointer=InMemorySaver(),
     middleware=[
         SummarizationMiddleware(
             model="openai:gpt-4o-mini",
             summary_prompt=summary_prompt,
+            # Trigger summarization when 70% of context is used.
             trigger=("fraction", 0.7),
+            # Keep the most recent 30% of messages in full.
             keep=("fraction", 0.3),
+            # No additional trimming before summarization.
             trim_tokens_to_summarize=None,
         ),
     ],
