@@ -4,6 +4,11 @@
 
 Welcome to LangChain Academy's Introduction to Middleware! This course introduces middleware in LangChain through a practical support-agent example, starting with the core agent loop and gradually moving toward more advanced middleware patterns.
 
+## Course Videos
+
+- [Part 1](https://www.youtube.com/watch?v=YKC8K2INuWs)
+- [Part 2](https://www.youtube.com/watch?v=mA32zBFLHCs)
+
 ## Python Version
 
 Please use Python version 3.11, 3.12, or 3.13.
@@ -48,6 +53,8 @@ Start Jupyter from the root of the repository:
 jupyter notebook
 ```
 
+Open `module-1/middleware.ipynb` to follow along with the course.
+
 ## Sign Up for LangSmith
 
 Create a [LangSmith](https://docs.langchain.com/langsmith/create-account-api-key) account and API key. You can reference the LangSmith docs [here](https://docs.smith.langchain.com/).
@@ -81,13 +88,13 @@ OPENAI_API_KEY="your-key"
 Module 1 includes an example environment file:
 
 ```text
-module-1/.env.example
+module-1/example.env
 ```
 
 Copy it to `.env` before running the notebook or Studio examples:
 
 ```bash
-cp module-1/.env.example module-1/.env
+cp module-1/example.env module-1/.env
 ```
 
 Then replace the placeholder values with your real API keys.
@@ -125,6 +132,14 @@ Open your browser and navigate to the Studio UI:
 ```text
 https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
 ```
+
+The following agents are available in Studio:
+
+- `refund_agent`
+- `refund_agent_with_hitl`
+- `gated_refund_agent`
+- `trip_planning_agent`
+- `research_agent`
 
 ## References
 

@@ -8,7 +8,6 @@ rejected so learners can inspect how tool approval changes the trace.
 from langchain.agents import create_agent
 from langchain.agents.middleware import HumanInTheLoopMiddleware
 from langchain_core.tools import tool
-from langgraph.checkpoint.memory import MemorySaver
 
 
 @tool
@@ -34,7 +33,6 @@ agent = create_agent(
         "You are a customer refund support agent. "
         "Look up the order and issue a refund when a customer requests one."
     ),
-    checkpointer=MemorySaver(),
     middleware=[
         HumanInTheLoopMiddleware(
             interrupt_on={
